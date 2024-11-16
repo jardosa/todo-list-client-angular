@@ -22,6 +22,7 @@
           <app-input type="password" formControlName="password" />
         </div>
       </div>
+      <!-- TODO: Add back icon -->
       <app-button text="Log in" [disabled]="loginForm.status !== 'VALID'" />
       <a
         [routerLink]="['/register']"

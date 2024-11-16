@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
-import { provideIcons } from '@ng-icons/core';
-import { heroHomeSolid, heroUserSolid, heroPencilSquareSolid, heroArrowRightOnRectangleSolid } from '@ng-icons/heroicons/solid';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +11,19 @@ import { heroHomeSolid, heroUserSolid, heroPencilSquareSolid, heroArrowRightOnRe
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  viewProviders: [provideIcons({ heroHomeSolid, heroUserSolid, heroPencilSquareSolid, heroArrowRightOnRectangleSolid })]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private router: Router) { }
+  showNavbar: boolean = true; // Default state of the navbar
+
   title = 'todo-list-client-angular';
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const hiddenRoutes = ['/login', '/register', '/logout'];
+        this.showNavbar = !hiddenRoutes.includes(event.urlAfterRedirects);
+      }
+    });
+  }
 }

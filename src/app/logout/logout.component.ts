@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './logout.component.html',
   styleUrl: './logout.component.scss'
 })
-export class LogoutComponent {
-
+export class LogoutComponent implements OnInit {
+  ngOnInit(): void {
+    localStorage.removeItem('authToken')
+  }
 }

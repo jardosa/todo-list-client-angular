@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputComponent } from '../components/atoms/input/input.component';
 import { ButtonComponent } from '../components/atoms/button/button.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,7 @@ import { ButtonComponent } from '../components/atoms/button/button.component';
     InputComponent,
     ReactiveFormsModule,
     ButtonComponent,
+    RouterLink,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

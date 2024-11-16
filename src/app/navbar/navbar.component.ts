@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavlinkComponent } from "../navlink/navlink.component";
+import { heroHomeSolid, heroUserSolid, heroPencilSquareSolid, heroArrowRightOnRectangleSolid } from '@ng-icons/heroicons/solid';
 export type NavLink = {
   name: string
   link: string
@@ -18,22 +19,22 @@ export class NavbarComponent {
     {
       name: 'Home',
       link: '/',
-      icon: 'heroHomeSolid'
+      icon: heroHomeSolid
     },
     {
       name: 'Users',
       link: '/users',
-      icon: 'heroUserSolid'
+      icon: heroUserSolid
     },
     {
       name: 'Todos',
       link: '/posts',
-      icon: 'heroPencilSquareSolid'
+      icon: heroPencilSquareSolid
     },
     {
       name: 'Log Out',
       link: '/logout',
-      icon: 'heroArrowRightOnRectangleSolid'
+      icon: heroArrowRightOnRectangleSolid
     },
   ]
 }
