@@ -1,18 +1,63 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './input.component.html',
-  styleUrl: './input.component.scss'
+  styleUrls: ['./input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputComponent),
+      multi: true,
+    },
+  ],
 })
-export class InputComponent {
+export class InputComponent implements ControlValueAccessor {
   @Input() error: boolean = false;
-  @Input() disabled: boolean = false;
-  @Input() placeholder: string = '';
-  @Input() value: string = '';
-  @Input() className: string = '';
+  @Input() type: string = 'text'; // Input type (e.g., text, password, email)
+  @Input() placeholder: string = ''; // Input placeholder
+  @Input() className: string = ''; // Additional CSS classes
+
+  value: string = ''; // The current value of the input
+  disabled: boolean = false; // Whether the input is disabled
+
+  // Callbacks for Angular forms
+  private onChange: (value: string) => void = () => { };
+  private onTouched: () => void = () => { };
+
+  // Called when the form needs to write a value to the input
+  writeValue(value: string): void {
+    this.value = value || ''; // Set the internal value
+  }
+
+  // Called when the form needs to register a change event
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  // Called when the form needs to register a touch event
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  // Called when Angular sets the disabled state
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  // Handle input change
+  onInputChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.value = target.value;
+    this.onChange(this.value); // Notify Angular of the value change
+  }
+
+  // Handle blur event
+  onBlur(): void {
+    this.onTouched(); // Notify Angular that the input has been touched
+  }
 }

@@ -1,18 +1,21 @@
 <input
-  [ngClass]="[
-    'outline',
-    'outline-1',
-    'outline-gray-300',
-    'hover:outline-blue-500',
-    'focus:outline-blue-500',
-    error ? 'outline-red-400 hover:outline-red-400' : '',
-    'disabled:opacity-50 disabled:bg-gray-500',
-    'transition',
-    'w-full',
-    'p-2',
-    className
-  ]"
-  [disabled]="disabled"
+  [type]="type"
   [placeholder]="placeholder"
-  [(ngModel)]="value"
+  [ngClass]="[
+  'outline',
+  'outline-1',
+  'outline-gray-300',
+  'hover:outline-blue-500',
+  'focus:outline-blue-500',
+  error ? 'outline-red-400 hover:outline-red-400' : '',
+  'disabled:opacity-50 disabled:bg-gray-500',
+  'transition',
+  'w-full',
+  'p-2',
+  className
+]"
+  [disabled]="disabled"
+  [value]="value"
+  (input)="onInputChange($event)"
+  (blur)="onBlur()"
 />
