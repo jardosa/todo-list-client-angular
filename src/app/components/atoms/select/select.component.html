@@ -1,0 +1,21 @@
+<select
+  [value]="value"
+  [ngClass]="[
+    'outline',
+    'outline-1',
+    'outline-gray-300',
+    'hover:outline-blue-500',
+    'focus:outline-blue-500',
+    error ? 'outline-red-400 hover:outline-red-400' : '',
+    'disabled:opacity-50 disabled:bg-gray-500',
+    'transition',
+    fullWidth ? 'w-full' : 'max-w-[200px]',
+    'p-2',
+    className
+  ]"
+  (change)="onValueChange($event)"
+>
+  <option *ngFor="let option of options" [value]="option.value">
+    {{ option.name }}
+  </option>
+</select>
