@@ -1,0 +1,21 @@
+<textarea
+  [rows]="rows"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [ngClass]="[
+    'outline',
+    'resize-none',
+    'outline-1',
+    'outline-gray-300',
+    'hover:outline-blue-500',
+    'focus:outline-blue-500',
+    error ? 'outline-red-400 hover:outline-red-400' : '',
+    'disabled:opacity-50 disabled:bg-gray-500',
+    'transition',
+    fullWidth ? 'max-w-[200px]' : '',
+    className
+  ]"
+  [value]="value"
+  (input)="onInputChange($event)"
+  (blur)="onBlur()"
+></textarea>

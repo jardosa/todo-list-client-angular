@@ -1,1 +1,55 @@
-<p>home works!</p>
+<div class="flex w-full h-[calc(100vh-60px)] sm:flex-row flex-col">
+  <div class="flex justify-center items-center border-b sm:border-r w-full sm:max-w-[450px]">
+      <div class="outline outline-1 outline-gray-200 grid max-w-none  sm:max-w-[400px] w-full m-3">
+          <form
+              onSubmit={onSubmit}
+              class="relative flex flex-col w-full gap-5 px-5 py-10"
+          >
+              <div class="text-2xl font-bold">Add Todos here</div>
+
+              <div class="flex flex-col gap-2">
+                  <div>Title:</div>
+                  <div>
+                      <app-input
+                          onChange={onChangeTitle}
+                          type='text'
+                          value={title}
+                      />
+                  </div>
+              </div>
+              <div class="flex flex-col gap-2">
+                  <div>Description:</div>
+                  <!-- <div>
+                      <TextArea
+                          error={!!error}
+                          class="min-h-[100px]"
+                          onChange={onChangeDescription}
+                          value={description}
+                      />
+                  </div> -->
+              </div>
+              <app-button />
+              <p class="absolute self-center font-semibold text-center text-red-400 bottom-2">
+                  <!-- {error} -->
+              </p>
+          </form>
+      </div>
+  </div>
+  <div class="flex flex-col w-full gap-5 p-5 overflow-y-auto">
+      <div class="text-2xl font-bold">Last 10 Todos</div>
+      <!-- {data?.posts.map((post) => (
+          <IndividualPost
+              showCommentCount
+              key={post._id}
+              post={post}
+          />
+      ))}
+      {!data?.posts?.length && (
+          <div class="text-xl font-bold">
+              You have no posts. Add one!
+          </div>
+      )} -->
+
+      <div class="w-full"></div>
+  </div>
+</div>

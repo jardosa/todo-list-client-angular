@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
       return {
         link: httpLink.create({
           uri: "http://localhost:3001/graphql",
-          withCredentials: true,
+          // withCredentials: true,
         }),
         cache: new InMemoryCache(),
       };
