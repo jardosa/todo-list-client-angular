@@ -7,7 +7,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   standalone: true,
   templateUrl: './text-area.component.html',
   imports: [CommonModule],
-  styleUrls: ['./text-area.component.css'],
+  styleUrls: ['./text-area.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

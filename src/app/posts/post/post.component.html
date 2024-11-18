@@ -1,1 +1,104 @@
-<p>post works!</p>
+<form
+  [formGroup]="todoForm"
+  (ngSubmit)="onSubmit()"
+  [ngClass]="[
+    'outline outline-1 outline-gray-300 rounded-lg p-2 pb-10 space-y-2 w-full relative',
+    fullWidth ? 'max-w-none' : 'max-w-[600px]'
+  ]"
+>
+  <div *ngIf="showUser" class="flex flex-col gap-2">
+    <div>
+      User:
+      <a
+        [routerLink]="['/users']"
+        routerLinkActive="router-link-active"
+        class="underline transition cursor-pointer hover:text-green-400 focus:text-green-400"
+      >
+        {{ fullName }}
+      </a>
+    </div>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div>Title:</div>
+    <div>
+      <app-input
+        [error]="!!updateError"
+        [disabled]="mode === 'read'"
+        [ngClass]="['disabled:bg-white']"
+        formControlName="title"
+        type="text"
+        id="title"
+      ></app-input>
+    </div>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div>Description:</div>
+    <div>
+      <app-text-area
+      [fullWidth]='true'
+        [error]="!!updateError"
+        [disabled]="mode === 'read'"
+        class="min-h-[50px] disabled:bg-white"
+        formControlName="description"
+      ></app-text-area>
+    </div>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div>Status:</div>
+    <div>
+      <app-select
+        class="disabled:bg-white"
+        [disabled]="mode === 'read'"
+        [error]="!!updateError"
+        [options]="options"
+        formControlName="status"
+      />
+    </div>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div>Last Updated: {{ post.updatedAt | date }}</div>
+  </div>
+  <div
+    *ngIf="mode === 'write' && ownDocument"
+    class="flex flex-row gap-1 flex-nowrap"
+  >
+    <app-button
+      (click)="toggleMode()"
+      class="hover:bg-red-600"
+      [error]="true"
+      text="Cancel"
+    />
+    <app-button type="submit" [disabled]="!!updateError || todoForm.status !== 'VALID'" />
+  </div>
+
+  <div class="flex flex-col gap-2" *ngIf="mode === 'read' && ownDocument">
+    <app-button
+      onClick="{toggleWriteMode}"
+      text="Update Todo"
+      iconPosition="right"
+      type="button"
+    />
+    <app-button
+      onClick="{deletePost}"
+      text="Delete Todo"
+      iconPosition="right"
+      class="hover:bg-red-600"
+      [error]="true"
+      type="button"
+    />
+  </div>
+
+  <div *ngIf="showCommentCount">
+    <a
+      class="underline transition cursor-pointer hover:text-green-400 focus:text-green-400"
+      [routerLink]="['/`/posts/${post._id}`']"
+      routerLinkActive="router-link-active"
+      >Comments: {{ post.comments.length }}</a
+    >
+  </div>
+  <p
+    class="absolute self-center font-semibold text-center text-red-400 bottom-2"
+  >
+    {{ updateError || deleteError }}
+  </p>
+</form>

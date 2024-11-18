@@ -1,23 +1,59 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-select',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './select.component.html',
-  styleUrl: './select.component.scss'
+  styleUrls: ['./select.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectComponent),
+      multi: true,
+    },
+  ],
 })
-export class SelectComponent {
+export class SelectComponent implements ControlValueAccessor {
   @Input() fullWidth: boolean = false; // Controls width
   @Input() error: boolean = false; // Error state
   @Input() options: { name: string; value: string }[] = []; // Dropdown options
-  @Input() value: string | null = null; // Selected value
   @Input() className: string = ''; // Additional custom classes
-  @Output() valueChange = new EventEmitter<string>(); // Emits value changes
 
+  value: string | null = null; // Selected value
+  disabled: boolean = false; // Disabled state
+
+  private onChange: (value: string) => void = () => { };
+  private onTouched: () => void = () => { };
+
+  // ControlValueAccessor methods
+  writeValue(value: string | null): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  // Handle value change
   onValueChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
-    this.valueChange.emit(target.value)
+    this.value = target.value;
+    this.onChange(this.value);
+  }
+
+  // Handle blur event
+  onBlur(): void {
+    this.onTouched();
   }
 }

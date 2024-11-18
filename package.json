@@ -24,8 +24,10 @@
     "@apollo/client": "^3.0.0",
     "@ng-icons/core": "^27.5.2",
     "@ng-icons/heroicons": "^29.9.0",
+    "@types/lodash": "^4.17.13",
     "apollo-angular": "^7.2.1",
     "graphql": "^16",
+    "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
