@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           description: this.todoForm.value.description ?? '',
         }
       },
+      refetchQueries: [PostsDocument]
     }).subscribe(({ data }) => {
     }, error => {
       this.error = error.message

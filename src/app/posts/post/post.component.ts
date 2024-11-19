@@ -1,6 +1,6 @@
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
-import { Post, PostStatus, RemovePostDocument, RemovePostMutation, RemovePostMutationVariables, UpdatePostDocument, UpdatePostMutation, UpdatePostMutationVariables, WhoAmIDocument, WhoAmIQuery, WhoAmIQueryVariables } from '../../../../graphql/generated';
+import { Post, PostsDocument, PostStatus, RemovePostDocument, RemovePostMutation, RemovePostMutationVariables, UpdatePostDocument, UpdatePostMutation, UpdatePostMutationVariables, WhoAmIDocument, WhoAmIQuery, WhoAmIQueryVariables } from '../../../../graphql/generated';
 import { InputComponent } from '../../components/atoms/input/input.component';
 import { TextAreaComponent } from '../../components/atoms/text-area/text-area.component';
 import { Apollo } from 'apollo-angular';
@@ -37,6 +37,10 @@ export class PostComponent implements OnInit {
     private router: Router,
   ) { }
 
+  fullName: string
+  updateError: string
+  deleteError: string
+  ownDocument: boolean = false
   todoForm = this.formBuilder.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
@@ -53,9 +57,10 @@ export class PostComponent implements OnInit {
     this.apollo
       .query<WhoAmIQuery, WhoAmIQueryVariables>({ query: WhoAmIDocument })
       .subscribe(({ data }) => {
-        this.fullName = `${data?.whoAmI.firstName} ${data?.whoAmI.lastName}`
+        this.fullName = `${data?.whoAmI.firstName.trim() || ''} ${data?.whoAmI.lastName}`.trim()
         this.ownDocument = this.post.userId === data.whoAmI._id
       })
+
 
     this.todoForm.setValue({
       title: this.post.title,
@@ -72,11 +77,6 @@ export class PostComponent implements OnInit {
       }
     });
   }
-
-  fullName: string
-  updateError: string
-  deleteError: string
-  ownDocument: boolean
 
   onSubmit() {
     this.apollo.mutate<UpdatePostMutation, UpdatePostMutationVariables>({
@@ -101,14 +101,19 @@ export class PostComponent implements OnInit {
       variables: {
         _id: this.post._id
       },
+      refetchQueries: [PostsDocument]
     }).subscribe(({ data }) => {
     }, error => {
       this.deleteError = error.message
     })
   }
 
-  toggleMode() {
-    this.mode = this.mode === 'read' ? 'write' : 'read'
+  toggleReadMode() {
+    this.mode = 'read'
+  }
+
+  toggleWriteMode() {
+    this.mode = 'write'
   }
 
 

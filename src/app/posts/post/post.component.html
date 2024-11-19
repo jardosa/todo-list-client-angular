@@ -3,7 +3,7 @@
   (ngSubmit)="onSubmit()"
   [ngClass]="[
     'outline outline-1 outline-gray-300 rounded-lg p-2 pb-10 space-y-2 w-full relative',
-    fullWidth ? 'max-w-none' : 'max-w-[600px]'
+    fullWidth ? 'max-w-none' : 'max-w-[600px] mx-auto'
   ]"
 >
   <div *ngIf="showUser" class="flex flex-col gap-2">
@@ -14,7 +14,7 @@
         routerLinkActive="router-link-active"
         class="underline transition cursor-pointer hover:text-green-400 focus:text-green-400"
       >
-        {{ fullName }}
+        {{fullName}}
       </a>
     </div>
   </div>
@@ -24,7 +24,7 @@
       <app-input
         [error]="!!updateError"
         [disabled]="mode === 'read'"
-        [ngClass]="['disabled:bg-white']"
+        class="disabled:bg-white"
         formControlName="title"
         type="text"
         id="title"
@@ -35,7 +35,7 @@
     <div>Description:</div>
     <div>
       <app-text-area
-      [fullWidth]='true'
+        [fullWidth]="true"
         [error]="!!updateError"
         [disabled]="mode === 'read'"
         class="min-h-[50px] disabled:bg-white"
@@ -63,23 +63,27 @@
     class="flex flex-row gap-1 flex-nowrap"
   >
     <app-button
-      (click)="toggleMode()"
+      (click)="toggleReadMode()"
       class="hover:bg-red-600"
       [error]="true"
+      type="button"
       text="Cancel"
     />
-    <app-button type="submit" [disabled]="!!updateError || todoForm.status !== 'VALID'" />
+    <app-button
+      type="submit"
+      [disabled]="!!updateError || todoForm.status !== 'VALID'"
+    />
   </div>
-
+{{mode}}{{ownDocument}}
   <div class="flex flex-col gap-2" *ngIf="mode === 'read' && ownDocument">
     <app-button
-      onClick="{toggleWriteMode}"
+      (click)="toggleWriteMode()"
       text="Update Todo"
       iconPosition="right"
       type="button"
     />
     <app-button
-      onClick="{deletePost}"
+      (click)="onDelete()"
       text="Delete Todo"
       iconPosition="right"
       class="hover:bg-red-600"

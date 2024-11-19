@@ -20,11 +20,11 @@ export class TextAreaComponent implements ControlValueAccessor {
   @Input() fullWidth: boolean = false;
   @Input() error: boolean = false;
   @Input() placeholder: string = '';
-  @Input() className: string = '';
+  @Input() class: string = '';
   @Input() rows: number = 4;
+  @Input() disabled: boolean = false;
 
   value: string = '';
-  disabled: boolean = false;
 
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
@@ -42,6 +42,7 @@ export class TextAreaComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
+    console.log('disabled', isDisabled)
     this.disabled = isDisabled;
   }
 

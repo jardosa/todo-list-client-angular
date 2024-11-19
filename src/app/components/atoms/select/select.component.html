@@ -11,12 +11,12 @@
     'disabled:opacity-50 disabled:bg-gray-500',
     'transition',
     fullWidth ? 'max-w-[200px]' : '',
-    className
+    class
   ]"
   (change)="onValueChange($event)"
   (blur)="onBlur()"
 >
-  <option *ngFor="let option of options" [value]="option.value">
+  <option *ngFor="let option of options" [value]="option.value" [selected]="option.value === value">
     {{ option.name }}
   </option>
 </select>

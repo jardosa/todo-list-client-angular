@@ -1,1 +1,27 @@
-<p>posts works!</p>
+<div class="w-full h-[calc(100vh-60px)] flex items-center flex-col p-5 gap-5">
+  <div class="text-2xl">Posts for {{fullName.replace('+', ' ')}}</div>
+  <div
+    *ngIf="!!posts.length"
+    class="grid w-full grid-cols-1 gap-5 px-2 py-2 overflow-auto"
+  >
+    <app-post
+      *ngFor="let post of posts"
+      key="{post._id}"
+      [post]="post"
+      [showCommentCount]="true"
+      [fullWidth]="false"
+    />
+  </div>
+  <div *ngIf="!posts.length" class="text-xl font-bold">
+    You have no posts.
+    <span>
+      <a
+        [routerLink]="['/']"
+        routerLinkActive="router-link-active"
+        class="underline transition cursor-pointer hover:text-green-400 focus:text-green-400"
+      >
+        Add one!
+      </a>
+    </span>
+  </div>
+</div>

@@ -20,10 +20,11 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() fullWidth: boolean = false; // Controls width
   @Input() error: boolean = false; // Error state
   @Input() options: { name: string; value: string }[] = []; // Dropdown options
-  @Input() className: string = ''; // Additional custom classes
+  @Input() class: string = ''; // Additional custom classes
+  @Input() disabled: boolean = false; // Disabled state
+  @Input() selected: string | null = null
 
   value: string | null = null; // Selected value
-  disabled: boolean = false; // Disabled state
 
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };

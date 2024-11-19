@@ -20,10 +20,10 @@ export class InputComponent implements ControlValueAccessor {
   @Input() error: boolean = false;
   @Input() type: string = 'text'; // Input type (e.g., text, password, email)
   @Input() placeholder: string = ''; // Input placeholder
-  @Input() className: string = ''; // Additional CSS classes
+  @Input() class: string = ''; // Additional CSS classes
+  @Input() disabled: boolean = false; // Whether the input is disabled
 
   value: string = ''; // The current value of the input
-  disabled: boolean = false; // Whether the input is disabled
 
   // Callbacks for Angular forms
   private onChange: (value: string) => void = () => { };

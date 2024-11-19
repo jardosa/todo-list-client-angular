@@ -9,6 +9,7 @@
     error ? 'bg-red-400' : 'bg-blue-400 enabled:hover:bg-green-400'
   ]"
   [disabled]="disabled"
+  [type]="type"
 >
   <!-- Left Icon -->
   <div *ngIf="icon && iconPosition === 'left'" class="hidden sm:block">

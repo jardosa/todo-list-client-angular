@@ -16,4 +16,5 @@ export class ButtonComponent {
   @Input() iconPosition: 'left' | 'right' = 'left';
   @Input() error: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() type: 'submit' | 'button' = 'submit';
 }
