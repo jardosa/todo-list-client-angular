@@ -14,7 +14,7 @@
         routerLinkActive="router-link-active"
         class="underline transition cursor-pointer hover:text-green-400 focus:text-green-400"
       >
-        {{fullName}}
+        {{ fullName }}
       </a>
     </div>
   </div>
@@ -74,7 +74,6 @@
       [disabled]="!!updateError || todoForm.status !== 'VALID'"
     />
   </div>
-{{mode}}{{ownDocument}}
   <div class="flex flex-col gap-2" *ngIf="mode === 'read' && ownDocument">
     <app-button
       (click)="toggleWriteMode()"
@@ -95,7 +94,7 @@
   <div *ngIf="showCommentCount">
     <a
       class="underline transition cursor-pointer hover:text-green-400 focus:text-green-400"
-      [routerLink]="['/`/posts/${post._id}`']"
+      [routerLink]="['/posts/', post._id]"
       routerLinkActive="router-link-active"
       >Comments: {{ post.comments.length }}</a
     >

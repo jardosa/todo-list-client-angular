@@ -1,0 +1,13 @@
+<form
+  (ngSubmit)="onSubmit()"
+  [formGroup]="commentForm"
+  [ngClass]="['max-w-[600px]', 'w-full']"
+>
+  <app-input
+    type="text"
+    placeholder="Add your comment here. Press Enter to submit"
+    formControlName="body"
+    id="body"
+    class="rounded-lg w-full min-h-[50px]"
+  ></app-input>
+</form>

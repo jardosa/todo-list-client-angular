@@ -1,0 +1,74 @@
+<form
+  [formGroup]="commentForm"
+  (ngSubmit)="onSubmit()"
+  [ngClass]="[
+    'outline outline-gray-300 rounded-lg p-2 w-full flex flex-col gap-2',
+    fullWidth ? 'max-w-none' : 'max-w-[600px]'
+  ]"
+>
+  <div class="w-full text-lg">
+    <a
+      class="underline transition cursor-pointer hover:text-green-400 focus:text-green-400"
+      [routerLink]="['/users', comment.userId]"
+      routerLinkActive="router-link-active"
+    >
+      {{ fullName }}
+    </a>
+  </div>
+  <div class="text-base">{{ comment.updatedAt | date }}</div>
+  <div *ngIf="mode === 'read' || mode === 'delete'" class="text-sm leading-5">
+    {{ comment.body }}
+  </div>
+
+  <app-text-area
+    *ngIf="mode === 'edit'"
+    formControlName="body"
+    [fullWidth]="true"
+    id="body"
+    class="w-full text-sm leading-5"
+  ></app-text-area>
+
+  <div *ngIf="mode === 'read' && ownDocument" class="grid gap-2">
+    <app-button
+      (click)="edit()"
+      customClass=""
+      text="Edit"
+    />
+    <app-button
+      (click)="delete()"
+      customClass="  hover:bg-red-600"
+      text="Delete"
+      [error]="true"
+    />
+  </div>
+
+  <div *ngIf="mode === 'edit'" class="grid gap-2">
+    <app-button type="submit" class="" text="Update" />
+    <app-button
+      type="button"
+      (click)="cancel()"
+      customClass="  hover:bg-red-600"
+      text="Cancel"
+      [error]="true"
+    />
+  </div>
+
+  <ng-container *ngIf="mode === 'delete'">
+    <div>Are you sure?</div>
+    <div class="flex flex-row gap-2 flex-nowrap">
+      <app-button
+        type="button"
+        (click)="cancel()"
+        class=""
+        text="No"
+      />
+      <app-button
+        type="button"
+        (click)="onRemoveComment()"
+        customClass="  hover:bg-red-600"
+        text="Yes"
+        [error]="true"
+      />
+    </div>
+  </ng-container>
+</form>

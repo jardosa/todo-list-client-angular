@@ -46,7 +46,7 @@
     <div class="text-2xl font-bold">Last 10 Todos</div>
     @for(post of posts; track post) {
 
-        <app-post [post]="post" [fullWidth]="true"></app-post>
+        <app-post [post]="post" [fullWidth]="true" [showCommentCount]="true"></app-post>
     }
     <!-- {data?.posts.map((post) => (
           <IndividualPost

@@ -1,10 +1,10 @@
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
-import { Post, PostsDocument, PostStatus, RemovePostDocument, RemovePostMutation, RemovePostMutationVariables, UpdatePostDocument, UpdatePostMutation, UpdatePostMutationVariables, WhoAmIDocument, WhoAmIQuery, WhoAmIQueryVariables } from '../../../../graphql/generated';
+import { Post, PostDocument, PostsDocument, PostStatus, RemovePostDocument, RemovePostMutation, RemovePostMutationVariables, UpdatePostDocument, UpdatePostMutation, UpdatePostMutationVariables, WhoAmIDocument, WhoAmIQuery, WhoAmIQueryVariables } from '../../../../graphql/generated';
 import { InputComponent } from '../../components/atoms/input/input.component';
 import { TextAreaComponent } from '../../components/atoms/text-area/text-area.component';
 import { Apollo } from 'apollo-angular';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../components/atoms/button/button.component';
 import { SelectComponent } from '../../components/atoms/select/select.component';
@@ -20,7 +20,7 @@ import { startCase } from 'lodash';
     ReactiveFormsModule,
     TextAreaComponent,
     CommonModule,
-    RouterLink,
+    RouterModule,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
@@ -68,14 +68,14 @@ export class PostComponent implements OnInit {
       status: this.post.status
     })
 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        const isInIndividualPostPage = event.urlAfterRedirects === `/posts/${this.post._id}`;
-        if (isInIndividualPostPage) {
-          this.router.navigate([''])
-        }
-      }
-    });
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     const isInIndividualPostPage = event.urlAfterRedirects === `/posts/${this.post._id}`;
+    //     if (isInIndividualPostPage) {
+    //       this.router.navigate([''])
+    //     }
+    //   }
+    // });
   }
 
   onSubmit() {
@@ -90,8 +90,10 @@ export class PostComponent implements OnInit {
         }
       },
     }).subscribe(({ data }) => {
+      this.mode = 'read'
     }, error => {
       this.updateError = error.message
+      this.mode = 'read'
     })
   }
 
@@ -101,8 +103,13 @@ export class PostComponent implements OnInit {
       variables: {
         _id: this.post._id
       },
-      refetchQueries: [PostsDocument]
+      refetchQueries: [{ query: PostsDocument }],
     }).subscribe(({ data }) => {
+      const idRemoved = data?.removePost._id
+
+      if (this.router.url === `/posts/${idRemoved}`) {
+        location.href = ''
+      }
     }, error => {
       this.deleteError = error.message
     })
